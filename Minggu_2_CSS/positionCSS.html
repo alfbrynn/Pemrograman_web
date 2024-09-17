@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="stylePosition.css">
+    <title>Position CSS</title>
+</head>
+<body>
+    <h2>Position static</h2>
+    <p>Position static digunakan untk mengatur element menjadi statis secara default. Element akan mengikuti posisi normal secara default, elemen tidak dipengaruhi oleh properti seperti top, bottom, left, right, dll.</p>
+    <div class="static">
+        Eelemen ini diatur menggunakan posisi: static
+    </div>
+    <br><br><br><br>
+    <h2>position: relative:</h2>
+    <p>Position static digunakan untk mengatur element menjadi statis secara default. Element akan mengikuti posisi normal secara default, elemen tidak dipengaruhi oleh properti seperti top, bottom, left, right, dll. 
+    </p>
+    <div class="relative">
+        Eelemen ini diatur menggunakan posisi: relative;
+    </div>
+    <br><br><br>
+    <h2>position: fixed;</h2>
+
+    <p>Sebuah element html yang menggunakan position: relative akan terletak pada posisi normal.
+        Mengatur properti atas, kanan, bawah, dan kiri dari elemen yang diposisikan dengan "relative"
+        akan membuatnya jauh dari posisi normalnya.
+        Konten lain tidak akan disesuaikan agar sesuai dengan celah yang ditinggalkan oleh elemen tersebut.</p>
+
+    <div class="fixed">
+        Eelemen ini diatur menggunakan posisi: fixed;
+    </div>
+    <br><br><br>
+    <br><br><br>
+    <br><br><br>
+    <br><br><br>
+    <br><br><br>
+    <br><br><br>
+    <h2>position: absolute;</h2>
+    <p>Element html menggunakan position absolute akan diposisikan relatif
+        dengan element lain yang mendahuluinya yang terdekat, bukan relatif terhadap layar secara normal
+    </p>
+    <div class="relative1"> Elemen ini diatur menggunakan posisi: relative
+        <div class="absolute">Elemen ini diatur menggunakan posisi: absolute;</div>
+    </div>
+    <br><br><br>
+    <br><br><br>
+    <h2>position sticky</h2>
+    <p>Cobalah untuk <b>scroll</b> untuk mengetahui bagaimana posisi sticky bekerja</p>
+    <p>Catatan: IE/Edge 15 dan versi yang lebih lama tidak mendukung sticky</p>
+    <div class="sticky"> hola aku adalah sticky</div>
+
+    <div style="padding-bottom: 2000px;">
+        <p>Dalam contoh ini, elemen sticky menempel pada posisi paling atas halaman (top:0)</p>
+        <p>Cobalah untuk melakukan scroll</p>
+        <p> Cobalah untuk melakukan scroll. Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias quisquam optio numquam ut eos porro, eligendi 
+            rerum maiores impedit aut ea quod quae. 
+            Eaque provident nobis et, nulla doloribus suscipit!</p>
+        <p>Cobalah untuk melakukan scroll. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptate aspernatur a, tenetur odio laborum provident minima recusandae quos soluta 
+            ipsa voluptatum tempore. Fuga tempora iure eaque mollitia, quos explicabo enim.</p>
+    </div>
+</body>
+</html>
