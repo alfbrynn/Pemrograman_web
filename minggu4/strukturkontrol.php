@@ -3,13 +3,14 @@ $nilaiNumerik = 92;
 
 if ($nilaiNumerik >= 90 && $nilaiNumerik <= 100) {
     echo "Nilai huruf: A";
-} else ($nilaiNumerik >= 80 && $nilaiNumerik <= 89) {
-    echo "Nilai huruf: B";
-} else ($nilaiNumerik >= 70 && $nilaiNumerik <= 79) {
+} elseif ($nilaiNumerik >= 80 && $nilaiNumerik <= 89) {
+    echo "Nilai huruf: B"; 
+} elseif ($nilaiNumerik >= 70 && $nilaiNumerik <= 79) {
     echo "Nilai huruf: C";
-} else ($nilaiNumerik >= 60 && $nilaiNumerik <= 69) {
+} elseif ($nilaiNumerik >= 60 && $nilaiNumerik <= 69) {
     echo "Nilai huruf: D";
 } 
+echo "<br> <br>";
 
 // pertanyaan 15
 $jarakSaatIni = 0;
@@ -22,17 +23,21 @@ while ($jarakSaatIni < $jarakTarget) {
     $hari++;
 }
 
+echo "Atlet tersebut memerlukan $hari hari untuk mencapai jarak 500 kilometer";
+echo "<br> <br>";
+
 // pertanyaan 16
 $jumlahLahan = 10;
 $tanamanPerlahan = 5;
 $buahPerTanaman = 10;
 $jumlahBuah = 0;
 
-for ($i = 1, $i <= $jumlahLahan; $i++) {
+for ($i = 1; $i <= $jumlahLahan; $i++) {
     $jumlahBuah += ($tanamanPerlahan * $buahPerTanaman);
 }
 
 echo "Jumlah buah yang akan dipanen adalah: $jumlahBuah";
+echo "<br> <br>";
 
 // pertanyaan 17
 $skorUjian = [85, 92, 78, 96, 88];
@@ -43,6 +48,7 @@ foreach ($skorUjian as $skor) {
 }
 
 echo "Total skor ujian: $totalSkor";
+echo "<br> <br>";
 
 // pertanyaan 18
 $nilaiSiswa = [85, 92, 58, 64, 90, 55, 88, 79, 70, 96];

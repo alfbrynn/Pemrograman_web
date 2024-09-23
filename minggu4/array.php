@@ -10,6 +10,7 @@ foreach ($nilaiSiswa as $nilai) {
 }
 
 echo "Daftar nilai siswa yang lulus: " . implode(', ', $nilaiLulus);
+echo "<br> <br>";
 
 // pertanyaan 23
 $daftarKaryawan = [
@@ -29,6 +30,7 @@ foreach ($daftarKaryawan as $karyawan) {
 }
 
 echo "Daftar karyawan yang memiliki pengalaman lebih dari lima tahun: " . implode(', ', $karyawanPengalamanLimaTahun);
+echo "<br> <br>";
 
 // pertanyaan 24
 $daftarNilai = [
