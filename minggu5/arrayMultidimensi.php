@@ -1,31 +1,63 @@
 <?php
 $menu = [
-    "nama" => "Beranda",
+    [
+    "nama" => "Beranda"
+    ],
+    [
+    "nama" => "Berita",
     "subMenu" => [
-        "nama" => "Berita",
-        "subMenu" => [
+        [
             "nama" => "Wisata",
             "subMenu" => [
+                [
                 "nama" => "Pantai"
+                ],
+                [
+                "nama" => "Gunung"
+                ]
             ]
         ],
-        "nama" => "Gunung",
+        [
         "nama" => "Kuliner"
+        ],
+        [
+        "nama" => "Hiburan"
+        ]
+    ]
     ],
-    "nama" => "Hiburan",
-    "nama" => "Tentang",
-    "nama" => "Kontak"
+    [
+    "nama" => "Tentang"
+    ],
+    [
+        "nama" => "Kontak"
+    ],
 ];
+
+// function tampilkanMenuBertingkat(array $menu) {
+//     echo "<ul>";
+
+//     foreach ($menu as $key => $item) {
+//         echo "<li>{$item['nama']}</li>";
+//     }
+
+//     echo "</ul>";
+// }
+
+tampilkanMenuBertingkat($menu);
 
 function tampilkanMenuBertingkat(array $menu) {
     echo "<ul>";
 
-    foreach ($menu as $key => $item) {
+    foreach ($menu as $item) {
         echo "<li>{$item['nama']}</li>";
+
+        // Cek apakah item memiliki subMenu
+        if (isset($item['subMenu'])) {
+            // Panggil fungsi ini secara rekursif untuk menampilkan subMenu
+            tampilkanMenuBertingkat($item['subMenu']);
+        }
     }
 
     echo "</ul>";
 }
-
-tampilkanMenuBertingkat($menu);
 ?>
