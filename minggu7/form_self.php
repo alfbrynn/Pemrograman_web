@@ -16,7 +16,7 @@
         // Validasi nama (contoh: pastikan nama tidak kosong)
         if (empty($_POST["nama"])) {
             $namaErr = "Nama harus diisi";
-        } else {
+        // } else {
             $nama = $_POST["nama"];
             echo "Data berhasil disimpan: " . $nama;
         }
