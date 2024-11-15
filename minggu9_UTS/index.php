@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// Handle Login
+// Login
 if (isset($_POST['login'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -12,7 +12,7 @@ if (isset($_POST['login'])) {
     } elseif (strlen($password) > 6) {
         $error = "Password maksimal 6 karakter";
     } elseif (!preg_match('/[A-Z]/', $password) || !preg_match('/[a-z]/', $password)) {
-        $error = "Password harus terdiri dari huruf besar dan kecil";
+        $error = "Password harus terdiri dari huruf besar, kecil dan angka";
     } else {
         $_SESSION['username'] = $username;
         header('Location: index.php?page=home');
@@ -20,20 +20,29 @@ if (isset($_POST['login'])) {
     }
 }
 
-// Handle Logout
+// Logout
 if (isset($_GET['action']) && $_GET['action'] == 'logout') {
     session_destroy();
     header('Location: index.php');
     exit();
 }
 
-// Handle Cek Harga
+// Cek Harga
 $total = 0;
+$total_transaksi = 0;
+$total_diskon = 0;
+$kupon_diskon = 0;
+
 if (isset($_POST['check'])) {
     $berat = $_POST['berat'];
     $jenis = $_POST['jenis'];
     $kecepatan = $_POST['kecepatan'];
     $member = $_POST['member'];
+
+    // cek apakah jumlah transaksi tersimpan di session
+    if (!isset($_SESSION['jumlah_transaksi'])) {
+        $_SESSION['jumlah_transaksi'] = 0; // Inisialisasi jika belum ada
+    }
 
     $harga = 0;
     if ($jenis == "Cuci Kering") {
@@ -48,14 +57,34 @@ if (isset($_POST['check'])) {
         $harga += 2000 * $berat;
     }
 
+    // Hitung total transaksi sebelum diskon
+    $total_transaksi = $harga;
+
+    // Hitung diskon jika member
     if ($member == "Member") {
-        $harga *= 0.9;
+        $total_diskon = 0.1 * $total_transaksi; // 10% diskon
+        $total = $total_transaksi - $total_diskon; // Total setelah diskon
+    } else {
+        $total = $total_transaksi; // Total tanpa diskon
     }
 
-    $total = $harga;
+    // Tambahkan logika kupon: gratis 2 kg pada transaksi ke-6
+    if ($_SESSION['jumlah_transaksi'] == 5) {
+        // Diskon gratis 2 kg
+        $berat_diskon = min(2, $berat); // Maksimal 2 kg gratis
+        $kupon_diskon = ($harga / $berat) * $berat_diskon; // Hitung nilai diskon 2 kg
+        $total -= $kupon_diskon; // Kurangi total dengan diskon kupon
+
+        // Reset jumlah transaksi setelah transaksi ke-6
+        $_SESSION['jumlah_transaksi'] = 0;
+    } else {
+        // Tambah jumlah transaksi jika belum ke-6
+        $_SESSION['jumlah_transaksi'] += 1;
+    }
 }
 
-// Check active page
+
+// Cej halaman yang aktif
 $page = isset($_GET['page']) ? $_GET['page'] : 'login';
 ?>
 
@@ -68,24 +97,21 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'login';
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
-            background-color: #f0f8ff; /* Background biru muda */
+            background-color: #f0f8ff;
         }
 
-        /* Tema navbar biru */
         .navbar {
-            background-color: #007bff !important; /* Biru */
+            background-color: #007bff !important; 
         }
         .navbar .nav-link {
             color: white !important;
         }
 
-        /* Ukuran carousel menjadi setengah layar */
         .carousel-inner img {
-            height: 50vh; /* Setengah layar */
+            height: 50vh;
             object-fit: cover;
         }
 
-        /* Profil perusahaan */
         .profil-perusahaan {
             margin-top: 2rem;
             padding: 1.5rem;
@@ -95,7 +121,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'login';
 
         .profil-perusahaan h2 {
             font-weight: bold;
-            color: #007bff; /* Biru */
+            color: #007bff; 
         }
 
         .profil-perusahaan p {
@@ -103,10 +129,9 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'login';
             color: #333;
         }
 
-        /* Responsif: carousel menjadi lebih kecil pada layar mobile */
         @media (max-width: 768px) {
             .carousel-inner img {
-                height: 30vh; /* Ukuran carousel pada layar kecil */
+                height: 30vh;
             }
         }
     </style>
@@ -115,7 +140,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'login';
         // Menampilkan dialog konfirmasi
         var confirmAction = confirm("Apakah Anda yakin ingin log out?");
         if (confirmAction) {
-            // Jika pengguna memilih "Yes", arahkan ke action=logout
+            // Jika pengguna memilih "Yes", maka akan logout
             window.location.href = "index.php?action=logout";
         }
     }
@@ -126,7 +151,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'login';
 </head>
 <body>
 
-<!-- Navbar Bootstrap -->
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#" style="font-weight: bold; color: white;">LaundryApp</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -142,7 +167,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'login';
                     <a class="nav-link" href="index.php?page=cek_harga">Cek Harga</a>
                 </li>
                 <li class="nav-item">
-                    <!-- Memanggil fungsi JavaScript untuk konfirmasi logout -->
+                    <!-- Konfirmasi logout -->
                     <a class="nav-link" href="#" onclick="confirmLogout()">Logout</a>
                 </li>
             <?php endif; ?>
@@ -237,7 +262,10 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'login';
             <button type="submit" name="check" class="btn btn-primary">CHECK</button>
         </form>
 
-        <h3 class="mt-4">Total Harga: Rp <?php echo number_format($total, 0, ',', '.'); ?></h3>
+        <h3 class="mt-4">Total Transaksi Sebelum Diskon: Rp <?php echo number_format($total_transaksi, 0, ',', '.'); ?></h3>
+        <h3>Total Diskon Member: Rp <?php echo number_format($total_diskon, 0, ',', '.'); ?></h3>
+        <!-- <h3>Diskon kupon : Rp <?php echo number_format($kupon_diskon, 0, ',', '.'); ?></h3> -->
+        <h3>Total Harga yang Harus Dibayar: Rp <?php echo number_format($total, 0, ',', '.'); ?></h3>
 
     <?php endif; ?>
 </div>
